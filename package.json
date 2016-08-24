@@ -10,5 +10,42 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "eslintConfig": {
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "indent": [
+        2,
+        "tab"
+      ],
+      "react/jsx-indent": [
+        2,
+        "tab"
+      ],
+      "react/jsx-indent-props": [
+        2,
+        "tab"
+      ]
+    }
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.1.2",
+    "react": "^15.3.1"
+  },
+  "peerDependencies": {
+    "react": "^15.3.1"
+  }
 }
