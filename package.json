@@ -1,0 +1,14 @@
+{
+  "name": "react-crop-selector",
+  "version": "1.0.0",
+  "description": "Select crop boundaries in an image",
+  "author": "chielkunkels",
+  "repository": "pokibv/react-crop-selector",
+  "bugs": "https://github.com/pokibv/react-crop-selector/issues",
+  "homepage": "https://github.com/pokibv/react-crop-selector#readme",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
+}
