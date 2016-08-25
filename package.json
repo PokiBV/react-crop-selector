@@ -6,11 +6,21 @@
   "repository": "pokibv/react-crop-selector",
   "bugs": "https://github.com/pokibv/react-crop-selector/issues",
   "homepage": "https://github.com/pokibv/react-crop-selector#readme",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel -D -d lib src",
+    "prebuild": "rimraf lib",
+    "prepublish": "npm run build",
+    "pretest": "rm -rf tmp && mkdirp tmp && browserify -p [css-modulesify --json tmp/styles.json -o tmp/bundle.css] -o tmp/bundle.js lib/index.js",
+    "test": "nyc --all ava test/*.spec.js"
+  },
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "./test/helpers/css-modules-loader.js"
+    ]
+  },
   "babel": {
     "presets": [
       "es2015",
@@ -43,17 +53,33 @@
       ]
     }
   },
+  "nyc": {
+    "include": [
+      "lib"
+    ]
+  },
   "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.13.0",
+    "browserify": "^13.1.0",
+    "css-modulesify": "^0.25.1",
+    "enzyme": "^2.4.1",
     "eslint": "^3.3.1",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.1.2",
-    "react": "^15.3.1"
+    "mkdirp": "^0.5.1",
+    "nyc": "^8.1.0",
+    "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.5"
   },
   "peerDependencies": {
     "react": "^15.3.1"
