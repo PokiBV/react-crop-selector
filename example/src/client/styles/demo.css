@@ -49,3 +49,11 @@ code {
 	max-width: 640px;
 	margin: 0 auto;
 }
+
+.cropper {
+	width: 640px;
+	height: 480px;
+	margin: 36px auto;
+	padding: 0;
+	background: url(https://unsplash.it/640/480/?image=1062);
+}
