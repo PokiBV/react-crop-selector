@@ -13,7 +13,8 @@
     "prebuild": "rimraf lib",
     "prepublish": "npm run build",
     "pretest": "rm -rf tmp && mkdirp tmp && browserify -p [css-modulesify --json tmp/styles.json -o tmp/bundle.css] -o tmp/bundle.js lib/index.js",
-    "test": "nyc --all ava test/*.spec.js"
+    "test": "nyc --all ava test/*.spec.js",
+    "watch": "babel -D -w -d lib src"
   },
   "ava": {
     "babel": "inherit",
