@@ -1,0 +1,146 @@
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #444;
+	font: 300 16px / 30px merriweather, serif;
+	text-align: center;
+}
+
+p {
+	margin: 0 0 24px;
+}
+
+code {
+	font-family: dejavu sans mono, bitstream vera sans mono, monospace;
+}
+
+._dist_client_styles_demo__logo {
+	display: block;
+	width: 200px;
+	margin: 72px auto 42px;
+}
+
+._dist_client_styles_demo__name {
+	font-size: 32px;
+	line-height: 48px;
+}
+
+._dist_client_styles_demo__intro {
+	max-width: 640px;
+	margin: 36px auto;
+	text-align: left;
+}
+
+._dist_client_styles_demo__code {
+	padding: 18px 18px;
+	background: #eee;
+	text-align: left;
+}
+
+._dist_client_styles_demo__code pre {
+	max-width: 640px;
+	margin: 0 auto;
+}
+
+._dist_client_styles_demo__cropper {
+	width: 640px;
+	height: 480px;
+	margin: 36px auto;
+	padding: 0;
+	background: url(https://unsplash.it/640/480/?image=1062);
+}
+._lib_crop_selector__container {
+	position: relative;
+}
+
+._lib_crop_selector__overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, .5);
+}
+
+._lib_crop_selector__crop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1px dashed rgba(0, 0, 0, .75);
+	background: transparent;
+	cursor: move;
+}
+
+._lib_crop_selector__handle {
+	position: absolute;
+	z-index: 1;
+	width: 10px;
+	height: 10px;
+	margin: -5px 0 0 -5px;
+}
+
+._lib_crop_selector__handle[data-handle="N"] {
+	top: 0;
+	left: 10px;
+	width: calc(100% - 10px);
+	cursor: n-resize;
+}
+
+._lib_crop_selector__handle[data-handle="NE"] {
+	z-index: 2;
+	top: 0;
+	left: calc(100% - 10px);
+	width: 20px;
+	height: 20px;
+	cursor: ne-resize;
+}
+
+._lib_crop_selector__handle[data-handle="E"] {
+	top: 10px;
+	left: 100%;
+	height: calc(100% - 10px);
+	cursor: e-resize;
+}
+
+._lib_crop_selector__handle[data-handle="SE"] {
+	z-index: 2;
+	top: calc(100% - 10px);
+	left: calc(100% - 10px);
+	width: 20px;
+	height: 20px;
+	cursor: se-resize;
+}
+
+._lib_crop_selector__handle[data-handle="S"] {
+	top: 100%;
+	left: 10px;
+	width: calc(100% - 10px);
+	cursor: s-resize;
+}
+
+._lib_crop_selector__handle[data-handle="SW"] {
+	z-index: 2;
+	top: calc(100% - 10px);
+	left: 0;
+	width: 20px;
+	height: 20px;
+	cursor: sw-resize;
+}
+
+._lib_crop_selector__handle[data-handle="W"] {
+	top: 10px;
+	height: calc(100% - 10px);
+	cursor: w-resize;
+}
+
+._lib_crop_selector__handle[data-handle="NW"] {
+	width: 20px;
+	height: 20px;
+	cursor: nw-resize;
+}
