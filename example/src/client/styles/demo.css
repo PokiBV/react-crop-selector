@@ -1,0 +1,51 @@
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #444;
+	font: 300 16px / 30px merriweather, serif;
+	text-align: center;
+}
+
+p {
+	margin: 0 0 24px;
+}
+
+code {
+	font-family: dejavu sans mono, bitstream vera sans mono, monospace;
+}
+
+.logo {
+	display: block;
+	width: 200px;
+	margin: 72px auto 42px;
+}
+
+.name {
+	font-size: 32px;
+	line-height: 48px;
+}
+
+.intro {
+	max-width: 640px;
+	margin: 36px auto;
+	text-align: left;
+}
+
+.code {
+	padding: 18px 18px;
+	background: #eee;
+	text-align: left;
+}
+
+.code pre {
+	max-width: 640px;
+	margin: 0 auto;
+}

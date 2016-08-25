@@ -1,4 +1,5 @@
 .nyc_output
+example/dist
 lib
 node_modules
 tmp

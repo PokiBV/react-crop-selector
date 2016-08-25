@@ -1,0 +1,32 @@
+{
+  "name": "react-crop-selector-example",
+  "version": "1.0.0",
+  "author": "chielkunkels",
+  "license": "MIT",
+  "main": "dist/server/index.js",
+  "scripts": {
+    "build:babel": "../node_modules/.bin/babel -D -d dist src",
+    "build:scripts": "../node_modules/.bin/browserify -p [css-modulesify -o dist/public/app.css] -o dist/public/app.js dist/client/index.js",
+    "build": "npm run build:babel && npm run build:scripts",
+    "clean": "../node_modules/.bin/rimraf dist",
+    "prebuild:scripts": "../node_modules/.bin/mkdirp dist/public",
+    "prebuild": "npm run clean",
+    "prewatch:scripts": "../node_modules/.bin/mkdirp dist/public",
+    "prewatch": "npm run clean",
+    "watch:babel": "../node_modules/.bin/babel --skip-initial-build -D -w -d dist src",
+    "watch:scripts": "watchify -p [css-modulesify -o dist/public/app.css] -o dist/public/app.js dist/client/index.js",
+    "watch:server": "nodemon dist/server/index.js",
+    "watch": "npm-run-all build:babel --parallel watch:*"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "serve-static": "^1.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2",
+    "npm-run-all": "^3.0.0",
+    "watchify": "^3.7.0"
+  }
+}
