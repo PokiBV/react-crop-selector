@@ -7,7 +7,7 @@ rather it gives you the tools to build something like that yourself with it.
 
 ## Usage
 
-`react-crop-selector` can be found on [npm][npm]:
+`react-crop-selector` can be found on [npm](https://www.npmjs.com/):
 
 ```bash
 npm install --save react-crop-selector
