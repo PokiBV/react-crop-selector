@@ -10,6 +10,8 @@ export default class CropSelector extends React.Component {
 		y1: React.PropTypes.number,
 		x2: React.PropTypes.number,
 		y2: React.PropTypes.number,
+		minWidth: React.PropTypes.number,
+		minHeight: React.PropTypes.number,
 	};
 
 	static defaultProps = {
@@ -87,6 +89,24 @@ export default class CropSelector extends React.Component {
 		const { width: maxX, height: maxY } = this.props;
 		const width = x2 - x1;
 		const height = y2 - y1;
+		const minWidth = (maxX / 100) * this.props.minWidth;
+		const minHeight = (maxY / 100) * this.props.minHeight;
+
+		if (width < minWidth && this.handle) {
+			if (/E/.test(this.handle)) {
+				x2 = x1 + minWidth;
+			} else if (/W/.test(this.handle)) {
+				x1 = x2 - minWidth;
+			}
+		}
+
+		if (height < minHeight && this.handle) {
+			if (/N/.test(this.handle)) {
+				y1 = y2 - minHeight;
+			} else if (/S/.test(this.handle)) {
+				y2 = y1 + minHeight;
+			}
+		}
 
 		if (x1 < 0) {
 			x1 = 0;
