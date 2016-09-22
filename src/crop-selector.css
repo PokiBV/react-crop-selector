@@ -85,3 +85,47 @@
 	height: 20px;
 	cursor: nw-resize;
 }
+
+.guides {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	transition: opacity .1s ease-out;
+}
+
+.dragging .guides {
+	opacity: 1;
+}
+
+.ruleOfThirds > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	background: #fff;
+	opacity: .75;
+}
+
+.ruleOfThirds .guideHorz1 {
+	top: 33%;
+	width: 100%;
+}
+
+.ruleOfThirds .guideHorz2 {
+	top: 67%;
+	width: 100%;
+}
+
+.ruleOfThirds .guideVert1 {
+	left: 33%;
+	height: 100%;
+}
+
+.ruleOfThirds .guideVert2 {
+	left: 67%;
+	height: 100%;
+}

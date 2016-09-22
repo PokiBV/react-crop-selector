@@ -13,7 +13,7 @@ test('<CropSelector /> should set given width and height on container', t => {
 
 test('<CropSelector /> should set default state', t => {
 	const container = shallow(<CropSelector width={640} height={480} />);
-	t.deepEqual(container.state(), { x1: 0, y1: 0, x2: 640, y2: 480 });
+	t.deepEqual(container.state(), { dragging: false, x1: 0, y1: 0, x2: 640, y2: 480 });
 });
 
 test('<CropSelector /> should calculate crop coordinates', t => {
@@ -29,6 +29,7 @@ test('<CropSelector /> should calculate crop coordinates', t => {
 	);
 
 	t.deepEqual(container.state(), {
+		dragging: false,
 		x1: Math.round((640 / 100) * 5),
 		y1: Math.round((480 / 100) * 5),
 		x2: Math.round((640 / 100) * 95),
@@ -82,7 +83,7 @@ test('<CropSelector /> should add handle data attribute for each handle', t => {
 test('<CropSelector /> should update state on position update', t => {
 	const container = shallow(<CropSelector width={640} height={480} />);
 	container.instance().setPosition(10, 10, 630, 470);
-	t.deepEqual(container.state(), { x1: 10, y1: 10, x2: 630, y2: 470 });
+	t.deepEqual(container.state(), { dragging: false, x1: 10, y1: 10, x2: 630, y2: 470 });
 });
 
 test('<CropSelector /> should call onChange when position updates', t => {

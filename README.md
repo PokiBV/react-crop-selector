@@ -48,6 +48,7 @@ y2 | Number | `y`-coord (as a percentage) of bottom right corner of the crop. *D
 minWidth | Number | minimum width (as a percentage) of the cropped area
 minHeight | Number | minimum width (as a percentage) of the cropped area
 ratio | String | aspect ratio to lock to defined as `width:height`, e.g. `4:3`
+guide | String | create guide lines inside the crop area, currently only supports `rule-of-thirds`
 onChange | Function | called when the crop changes. Receives `x1`, `y1`, `x2` and `y2` (as percentages) as its arguments.
 
 

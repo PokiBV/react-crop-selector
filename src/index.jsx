@@ -13,6 +13,7 @@ export default class CropSelector extends React.Component {
 		minWidth: React.PropTypes.number,
 		minHeight: React.PropTypes.number,
 		ratio: React.PropTypes.string,
+		guide: React.PropTypes.oneOf(['rule-of-thirds']),
 	};
 
 	static defaultProps = {
@@ -28,6 +29,7 @@ export default class CropSelector extends React.Component {
 		super();
 
 		this.state = {
+			dragging: false,
 			x1: Math.round((width / 100) * x1),
 			y1: Math.round((height / 100) * y1),
 			x2: Math.round((width / 100) * x2),
@@ -82,6 +84,8 @@ export default class CropSelector extends React.Component {
 			y2: this.handle ? !/S/.test(this.handle) : false,
 		};
 
+		this.setState({ dragging: true });
+
 		window.addEventListener('mousemove', this.onDragMove);
 		window.addEventListener('mouseup', this.onDragEnd);
 	}
@@ -102,6 +106,7 @@ export default class CropSelector extends React.Component {
 
 	onDragEnd() {
 		this.handle = '';
+		this.setState({ dragging: false });
 
 		window.removeEventListener('mousemove', this.onDragMove);
 		window.removeEventListener('mouseup', this.onDragEnd);
@@ -261,8 +266,8 @@ export default class CropSelector extends React.Component {
 	}
 
 	render() {
-		const { width, height } = this.props;
-		const { x1, y1, x2, y2 } = this.state;
+		const { width, height, guide } = this.props;
+		const { dragging, x1, y1, x2, y2 } = this.state;
 
 		const cropStyle = {
 			width: x2 - x1,
@@ -279,9 +284,14 @@ export default class CropSelector extends React.Component {
 
 		const handles = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
+		const classes = [styles.container];
+		if (dragging) {
+			classes.push(styles.dragging);
+		}
+
 		return (
 			<div
-				className={styles.container}
+				className={classes.join(' ')}
 				style={{ width, height }}
 				ref={el => { this.containerEl = el; }}
 			>
@@ -300,6 +310,14 @@ export default class CropSelector extends React.Component {
 							data-handle={handle}
 						/>
 					))}
+					{guide === 'rule-of-thirds' && (
+						<div className={`${styles.guides} ${styles.ruleOfThirds}`}>
+							<div className={styles.guideHorz1} />
+							<div className={styles.guideHorz2} />
+							<div className={styles.guideVert1} />
+							<div className={styles.guideVert2} />
+						</div>
+					)}
 				</div>
 			</div>
 		);
