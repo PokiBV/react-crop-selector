@@ -12,6 +12,7 @@ export default class CropSelector extends React.Component {
 		y2: React.PropTypes.number,
 		minWidth: React.PropTypes.number,
 		minHeight: React.PropTypes.number,
+		ratio: React.PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -19,6 +20,8 @@ export default class CropSelector extends React.Component {
 		y1: 0,
 		x2: 100,
 		y2: 100,
+		minWidth: 0,
+		minHeight: 0,
 	};
 
 	constructor({ width, height, x1, y1, x2, y2 }) {
@@ -34,6 +37,25 @@ export default class CropSelector extends React.Component {
 		this.onDragStart = this.onDragStart.bind(this);
 		this.onDragMove = this.onDragMove.bind(this);
 		this.onDragEnd = this.onDragEnd.bind(this);
+	}
+
+	componentWillMount() {
+		const { x1, y1, x2, y2 } = this.state;
+		const { width: maxX, height: maxY } = this.props;
+
+		this.handle = 'N';
+		const coords = this.adjustPosition(x1, y1, x2, y2);
+		this.handle = '';
+
+		const width = coords.x2 - coords.x1;
+		const height = coords.y2 - coords.y1;
+
+		coords.x1 = Math.round((maxX - width) / 2);
+		coords.x2 = coords.x1 + width;
+		coords.y1 = Math.round((maxY - height) / 2);
+		coords.y2 = coords.y1 + height;
+
+		this.setState(coords);
 	}
 
 	componentWillReceiveProps({ width, height, x1, y1, x2, y2 }) {
@@ -86,27 +108,27 @@ export default class CropSelector extends React.Component {
 	}
 
 	setPosition(x1, y1, x2, y2) {
+		const { width, height } = this.props;
+		const coords = this.adjustPosition(x1, y1, x2, y2);
+
+		this.setState(coords);
+
+		if (this.props.onChange) {
+			this.props.onChange(
+				Math.round((100 / width) * coords.x1),
+				Math.round((100 / height) * coords.y1),
+				Math.round((100 / width) * coords.x2),
+				Math.round((100 / height) * coords.y2)
+			);
+		}
+	}
+
+	adjustPosition(x1, y1, x2, y2) {
 		const { width: maxX, height: maxY } = this.props;
-		const width = x2 - x1;
-		const height = y2 - y1;
 		const minWidth = (maxX / 100) * this.props.minWidth;
 		const minHeight = (maxY / 100) * this.props.minHeight;
-
-		if (width < minWidth && this.handle) {
-			if (/E/.test(this.handle)) {
-				x2 = x1 + minWidth;
-			} else if (/W/.test(this.handle)) {
-				x1 = x2 - minWidth;
-			}
-		}
-
-		if (height < minHeight && this.handle) {
-			if (/N/.test(this.handle)) {
-				y1 = y2 - minHeight;
-			} else if (/S/.test(this.handle)) {
-				y2 = y1 + minHeight;
-			}
-		}
+		let width = x2 - x1;
+		let height = y2 - y1;
 
 		if (x1 < 0) {
 			x1 = 0;
@@ -128,16 +150,114 @@ export default class CropSelector extends React.Component {
 			y1 = this.lock.y1 ? y1 : y2 - height;
 		}
 
-		this.setState({ x1, y1, x2, y2 });
+		width = x2 - x1;
+		height = y2 - y1;
 
-		if (this.props.onChange) {
-			this.props.onChange(
-				Math.round((100 / maxX) * x1),
-				Math.round((100 / maxY) * y1),
-				Math.round((100 / maxX) * x2),
-				Math.round((100 / maxY) * y2)
-			);
+		if (width < minWidth && this.handle) {
+			width = minWidth;
+
+			if (/E/.test(this.handle)) {
+				x2 = x1 + width;
+			} else if (/W/.test(this.handle)) {
+				x1 = x2 - width;
+			}
 		}
+
+		if (height < minHeight && this.handle) {
+			height = minHeight;
+
+			if (/N/.test(this.handle)) {
+				y1 = y2 - height;
+			} else if (/S/.test(this.handle)) {
+				y2 = y1 + height;
+			}
+		}
+
+		if (this.props.ratio && this.handle) {
+			const ratio = this.props.ratio.split(':').map(i => parseInt(i, 10));
+
+			if (/(?:N|S)/.test(this.handle)) {
+				width = Math.round((height / ratio[1]) * ratio[0]);
+
+				if (width < minWidth) {
+					width = minWidth;
+					height = Math.round((width / ratio[0]) * ratio[1]);
+
+					if (/S/.test(this.handle)) {
+						y2 = y1 + height;
+					} else {
+						y1 = y2 - height;
+					}
+				}
+
+				if (/W/.test(this.handle)) {
+					x1 = x2 - width;
+				} else {
+					x2 = x1 + width;
+				}
+
+				if (x1 < 0 || x2 > maxX) {
+					if (x1 < 0) {
+						x1 = 0;
+					}
+
+					if (x2 > maxX) {
+						x2 = maxX;
+					}
+
+					width = x2 - x1;
+					height = Math.round((width / ratio[0]) * ratio[1]);
+
+					if (/S/.test(this.handle)) {
+						y2 = y1 + height;
+					} else {
+						y1 = y2 - height;
+					}
+				}
+			}
+
+			if (/(?:E|W)/.test(this.handle)) {
+				height = Math.round((width / ratio[0]) * ratio[1]);
+
+				if (height < minHeight) {
+					height = minHeight;
+					width = Math.round((height / ratio[1]) * ratio[0]);
+
+					if (/E/.test(this.handle)) {
+						x2 = x1 + width;
+					} else {
+						x1 = x2 - width;
+					}
+				}
+
+				if (/N/.test(this.handle)) {
+					y1 = y2 - height;
+				} else {
+					y2 = y1 + height;
+				}
+
+				if (y1 < 0 || y2 > maxY) {
+					if (y1 < 0) {
+						y1 = 0;
+					}
+
+					if (y2 > maxY) {
+						y2 = maxY;
+					}
+
+					height = y2 - y1;
+					width = Math.round((height / ratio[1]) * ratio[0]);
+
+					if (/E/.test(this.handle)) {
+						x2 = x1 + width;
+					} else {
+						x1 = x2 - width;
+					}
+				}
+			}
+		}
+
+		return { x1, y1, x2, y2 };
 	}
 
 	render() {
