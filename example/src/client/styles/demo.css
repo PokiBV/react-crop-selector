@@ -14,8 +14,16 @@ body {
 	text-align: center;
 }
 
+h1,
+h2,
+h3,
+h4,
 p {
 	margin: 0 0 24px;
+}
+
+h2 {
+	margin-top: 96px;
 }
 
 code {
