@@ -77,7 +77,7 @@ test('<CropSelector /> should add handle data attribute for each handle', t => {
 		.find(`.${styles.crop} .${styles.handle}`)
 		.map(handle => handle.prop('data-handle'));
 
-	t.deepEqual(rendered, ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']);
+	t.deepEqual(rendered, ['N', 'E', 'S', 'W', 'NE', 'SE', 'SW', 'NW']);
 });
 
 test('<CropSelector /> should update state on position update', t => {

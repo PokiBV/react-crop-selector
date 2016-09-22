@@ -266,7 +266,7 @@ export default class CropSelector extends React.Component {
 	}
 
 	render() {
-		const { width, height, guide } = this.props;
+		const { width, height, guide, ratio } = this.props;
 		const { dragging, x1, y1, x2, y2 } = this.state;
 
 		const cropStyle = {
@@ -282,7 +282,8 @@ export default class CropSelector extends React.Component {
 			{ width: x1, height },
 		];
 
-		const handles = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+		const handles = ratio ? [] : ['N', 'E', 'S', 'W'];
+		handles.push('NE', 'SE', 'SW', 'NW');
 
 		const classes = [styles.container];
 		if (dragging) {

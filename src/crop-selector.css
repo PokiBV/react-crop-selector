@@ -21,69 +21,130 @@
 .handle {
 	position: absolute;
 	z-index: 1;
-	width: 10px;
-	height: 10px;
-	margin: -5px 0 0 -5px;
+	width: 20px;
+	height: 20px;
+	transition: opacity .1s ease-out;
+}
+
+.dragging .handle {
+	opacity: .1;
+}
+
+.handle:before,
+.handle:after {
+	content: '';
+	position: absolute;
+	background: #fff;
+}
+
+.handle[data-handle*="N"]:before,
+.handle[data-handle*="S"]:before {
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5px;
+	border: 1px solid #000;
+}
+
+.handle[data-handle*="E"]:after,
+.handle[data-handle*="W"]:after {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 5px;
+	border: 1px solid #000;
 }
 
 .handle[data-handle="N"] {
-	top: 0;
-	left: 10px;
-	width: calc(100% - 10px);
+	top: -1px;
+	left: 50%;
+	transform: translateX(-50%);
 	cursor: n-resize;
 }
 
-.handle[data-handle="NE"] {
-	z-index: 2;
-	top: 0;
-	left: calc(100% - 10px);
-	width: 20px;
-	height: 20px;
-	cursor: ne-resize;
-}
-
 .handle[data-handle="E"] {
-	top: 10px;
-	left: 100%;
-	height: calc(100% - 10px);
+	top: 50%;
+	right: -1px;
+	transform: translateY(-50%);
 	cursor: e-resize;
 }
-
-.handle[data-handle="SE"] {
-	z-index: 2;
-	top: calc(100% - 10px);
-	left: calc(100% - 10px);
-	width: 20px;
-	height: 20px;
-	cursor: se-resize;
+.handle[data-handle="E"]:after {
+	left: auto;
+	right: 0;
 }
 
 .handle[data-handle="S"] {
-	top: 100%;
-	left: 10px;
-	width: calc(100% - 10px);
+	left: 50%;
+	bottom: -1px;
+	transform: translateX(-50%);
 	cursor: s-resize;
 }
-
-.handle[data-handle="SW"] {
-	z-index: 2;
-	top: calc(100% - 10px);
-	left: 0;
-	width: 20px;
-	height: 20px;
-	cursor: sw-resize;
+.handle[data-handle="S"]:before {
+	top: auto;
+	bottom: 0;
 }
 
 .handle[data-handle="W"] {
-	top: 10px;
-	height: calc(100% - 10px);
+	top: 50%;
+	left: -1px;
+	transform: translateY(-50%);
 	cursor: w-resize;
 }
 
+.handle[data-handle="NE"] {
+	top: -1px;
+	right: -1px;
+	cursor: ne-resize;
+}
+.handle[data-handle="NE"]:after {
+	top: 4px;
+	left: auto;
+	right: 0;
+	border-top: 0;
+}
+
+.handle[data-handle="SE"] {
+	right: -1px;
+	bottom: -1px;
+	cursor: se-resize;
+}
+.handle[data-handle="SE"]:before {
+	top: auto;
+	bottom: 0;
+}
+.handle[data-handle="SE"]:after {
+	top: 0;
+	left: auto;
+	right: 0;
+	bottom: 4px;
+	border-top-width: 1px;
+	border-bottom: 0;
+}
+
+.handle[data-handle="SW"] {
+	left: -1px;
+	bottom: -1px;
+	cursor: sw-resize;
+}
+.handle[data-handle="SW"]:before {
+	top: auto;
+	bottom: 0;
+}
+.handle[data-handle="SW"]:after {
+	top: 0;
+	bottom: 4px;
+	border-top-width: 1px;
+	border-bottom: 0;
+}
+
 .handle[data-handle="NW"] {
-	width: 20px;
-	height: 20px;
+	top: -1px;
+	left: -1px;
 	cursor: nw-resize;
+}
+.handle[data-handle="NW"]:after {
+	top: 4px;
+	border-top: 0;
 }
 
 .guides {
