@@ -14,8 +14,16 @@ body {
 	text-align: center;
 }
 
+h1,
+h2,
+h3,
+h4,
 p {
 	margin: 0 0 24px;
+}
+
+h2 {
+	margin-top: 96px;
 }
 
 code {
@@ -80,67 +88,172 @@ code {
 ._lib_crop_selector__handle {
 	position: absolute;
 	z-index: 1;
-	width: 10px;
-	height: 10px;
-	margin: -5px 0 0 -5px;
+	width: 20px;
+	height: 20px;
+	transition: opacity .1s ease-out;
+}
+
+._lib_crop_selector__dragging ._lib_crop_selector__handle {
+	opacity: .1;
+}
+
+._lib_crop_selector__handle:before,
+._lib_crop_selector__handle:after {
+	content: '';
+	position: absolute;
+	background: #fff;
+}
+
+._lib_crop_selector__handle[data-handle*="N"]:before,
+._lib_crop_selector__handle[data-handle*="S"]:before {
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5px;
+	border: 1px solid #000;
+}
+
+._lib_crop_selector__handle[data-handle*="E"]:after,
+._lib_crop_selector__handle[data-handle*="W"]:after {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 5px;
+	border: 1px solid #000;
 }
 
 ._lib_crop_selector__handle[data-handle="N"] {
-	top: 0;
-	left: 10px;
-	width: calc(100% - 10px);
+	top: -1px;
+	left: 50%;
+	transform: translateX(-50%);
 	cursor: n-resize;
 }
 
-._lib_crop_selector__handle[data-handle="NE"] {
-	z-index: 2;
-	top: 0;
-	left: calc(100% - 10px);
-	width: 20px;
-	height: 20px;
-	cursor: ne-resize;
-}
-
 ._lib_crop_selector__handle[data-handle="E"] {
-	top: 10px;
-	left: 100%;
-	height: calc(100% - 10px);
+	top: 50%;
+	right: -1px;
+	transform: translateY(-50%);
 	cursor: e-resize;
 }
-
-._lib_crop_selector__handle[data-handle="SE"] {
-	z-index: 2;
-	top: calc(100% - 10px);
-	left: calc(100% - 10px);
-	width: 20px;
-	height: 20px;
-	cursor: se-resize;
+._lib_crop_selector__handle[data-handle="E"]:after {
+	left: auto;
+	right: 0;
 }
 
 ._lib_crop_selector__handle[data-handle="S"] {
-	top: 100%;
-	left: 10px;
-	width: calc(100% - 10px);
+	left: 50%;
+	bottom: -1px;
+	transform: translateX(-50%);
 	cursor: s-resize;
 }
-
-._lib_crop_selector__handle[data-handle="SW"] {
-	z-index: 2;
-	top: calc(100% - 10px);
-	left: 0;
-	width: 20px;
-	height: 20px;
-	cursor: sw-resize;
+._lib_crop_selector__handle[data-handle="S"]:before {
+	top: auto;
+	bottom: 0;
 }
 
 ._lib_crop_selector__handle[data-handle="W"] {
-	top: 10px;
-	height: calc(100% - 10px);
+	top: 50%;
+	left: -1px;
+	transform: translateY(-50%);
 	cursor: w-resize;
 }
 
+._lib_crop_selector__handle[data-handle="NE"] {
+	top: -1px;
+	right: -1px;
+	cursor: ne-resize;
+}
+._lib_crop_selector__handle[data-handle="NE"]:after {
+	top: 4px;
+	left: auto;
+	right: 0;
+	border-top: 0;
+}
+
+._lib_crop_selector__handle[data-handle="SE"] {
+	right: -1px;
+	bottom: -1px;
+	cursor: se-resize;
+}
+._lib_crop_selector__handle[data-handle="SE"]:before {
+	top: auto;
+	bottom: 0;
+}
+._lib_crop_selector__handle[data-handle="SE"]:after {
+	top: 0;
+	left: auto;
+	right: 0;
+	bottom: 4px;
+	border-top-width: 1px;
+	border-bottom: 0;
+}
+
+._lib_crop_selector__handle[data-handle="SW"] {
+	left: -1px;
+	bottom: -1px;
+	cursor: sw-resize;
+}
+._lib_crop_selector__handle[data-handle="SW"]:before {
+	top: auto;
+	bottom: 0;
+}
+._lib_crop_selector__handle[data-handle="SW"]:after {
+	top: 0;
+	bottom: 4px;
+	border-top-width: 1px;
+	border-bottom: 0;
+}
+
 ._lib_crop_selector__handle[data-handle="NW"] {
-	width: 20px;
-	height: 20px;
+	top: -1px;
+	left: -1px;
 	cursor: nw-resize;
+}
+._lib_crop_selector__handle[data-handle="NW"]:after {
+	top: 4px;
+	border-top: 0;
+}
+
+._lib_crop_selector__guides {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	transition: opacity .1s ease-out;
+}
+
+._lib_crop_selector__dragging ._lib_crop_selector__guides {
+	opacity: 1;
+}
+
+._lib_crop_selector__ruleOfThirds > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	background: #fff;
+	opacity: .75;
+}
+
+._lib_crop_selector__ruleOfThirds ._lib_crop_selector__guideHorz1 {
+	top: 33%;
+	width: 100%;
+}
+
+._lib_crop_selector__ruleOfThirds ._lib_crop_selector__guideHorz2 {
+	top: 67%;
+	width: 100%;
+}
+
+._lib_crop_selector__ruleOfThirds ._lib_crop_selector__guideVert1 {
+	left: 33%;
+	height: 100%;
+}
+
+._lib_crop_selector__ruleOfThirds ._lib_crop_selector__guideVert2 {
+	left: 67%;
+	height: 100%;
 }
