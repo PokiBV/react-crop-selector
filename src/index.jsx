@@ -127,10 +127,10 @@ export default class CropSelector extends React.Component {
 
 		if (this.props.onChange) {
 			this.props.onChange(
-				Math.round((100 / width) * coords.x1),
-				Math.round((100 / height) * coords.y1),
-				Math.round((100 / width) * coords.x2),
-				Math.round((100 / height) * coords.y2)
+				(100 / width) * coords.x1,
+				(100 / height) * coords.y1,
+				(100 / width) * coords.x2,
+				(100 / height) * coords.y2
 			);
 		}
 	}
