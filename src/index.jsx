@@ -68,12 +68,12 @@ export default class CropSelector extends React.Component {
 	}
 
 	componentWillReceiveProps({ width, height, x1, y1, x2, y2 }) {
-		this.setState({
-			x1: Math.round((width / 100) * x1),
-			y1: Math.round((height / 100) * y1),
-			x2: Math.round((width / 100) * x2),
-			y2: Math.round((height / 100) * y2),
-		});
+		this.setPosition(
+			Math.round((width / 100) * x1),
+			Math.round((height / 100) * y1),
+			Math.round((width / 100) * x2),
+			Math.round((height / 100) * y2),
+		);
 	}
 
 	onDragStart(ev) {
