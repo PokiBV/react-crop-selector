@@ -50,13 +50,30 @@ export default class CropSelector extends React.Component {
 
 	componentWillMount() {
 		const { x1, y1, x2, y2 } = this.state;
-		const { width, height } = this.props;
+		const { width: maxX, height: maxY } = this.props;
 
-		this.resetPosition(x1, y1, x2, y2, width, height);
+		this.handle = 'N';
+		const coords = this.adjustPosition(x1, y1, x2, y2);
+		this.handle = '';
+
+		const width = coords.x2 - coords.x1;
+		const height = coords.y2 - coords.y1;
+
+		coords.x1 = Math.round((maxX - width) / 2);
+		coords.x2 = coords.x1 + width;
+		coords.y1 = Math.round((maxY - height) / 2);
+		coords.y2 = coords.y1 + height;
+
+		this.setState(coords);
 	}
 
 	componentWillReceiveProps({ width, height, x1, y1, x2, y2 }) {
-		this.resetPosition(x1, y1, x2, y2, width, height);
+		this.setState({
+			x1: Math.round((width / 100) * x1),
+			y1: Math.round((height / 100) * y1),
+			x2: Math.round((width / 100) * x2),
+			y2: Math.round((height / 100) * y2),
+		});
 	}
 
 	onDragStart(ev) {
@@ -116,22 +133,6 @@ export default class CropSelector extends React.Component {
 				Math.round((100 / height) * coords.y2)
 			);
 		}
-	}
-
-	resetPosition(x1, y1, x2, y2, maxX, maxY) {
-		this.handle = 'N';
-		const coords = this.adjustPosition(x1, y1, x2, y2);
-		this.handle = '';
-
-		const width = coords.x2 - coords.x1;
-		const height = coords.y2 - coords.y1;
-
-		coords.x1 = Math.round((maxX - width) / 2);
-		coords.x2 = coords.x1 + width;
-		coords.y1 = Math.round((maxY - height) / 2);
-		coords.y2 = coords.y1 + height;
-
-		this.setState(coords);
 	}
 
 	adjustPosition(x1, y1, x2, y2) {
