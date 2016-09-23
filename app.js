@@ -21140,6 +21140,13 @@ var CropSelector = function (_React$Component) {
 			y2: Math.round(height / 100 * y2)
 		};
 
+		_this.lock = {
+			x1: false,
+			y1: false,
+			x2: false,
+			y2: false
+		};
+
 		_this.onDragStart = _this.onDragStart.bind(_this);
 		_this.onDragMove = _this.onDragMove.bind(_this);
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
@@ -21155,23 +21162,11 @@ var CropSelector = function (_React$Component) {
 			var x2 = _state.x2;
 			var y2 = _state.y2;
 			var _props = this.props;
-			var maxX = _props.width;
-			var maxY = _props.height;
+			var width = _props.width;
+			var height = _props.height;
 
 
-			this.handle = 'N';
-			var coords = this.adjustPosition(x1, y1, x2, y2);
-			this.handle = '';
-
-			var width = coords.x2 - coords.x1;
-			var height = coords.y2 - coords.y1;
-
-			coords.x1 = Math.round((maxX - width) / 2);
-			coords.x2 = coords.x1 + width;
-			coords.y1 = Math.round((maxY - height) / 2);
-			coords.y2 = coords.y1 + height;
-
-			this.setState(coords);
+			this.resetPosition(x1, y1, x2, y2, width, height);
 		}
 	}, {
 		key: 'componentWillReceiveProps',
@@ -21183,12 +21178,7 @@ var CropSelector = function (_React$Component) {
 			var x2 = _ref2.x2;
 			var y2 = _ref2.y2;
 
-			this.setState({
-				x1: Math.round(width / 100 * x1),
-				y1: Math.round(height / 100 * y1),
-				x2: Math.round(width / 100 * x2),
-				y2: Math.round(height / 100 * y2)
-			});
+			this.resetPosition(x1, y1, x2, y2, width, height);
 		}
 	}, {
 		key: 'onDragStart',
@@ -21255,6 +21245,23 @@ var CropSelector = function (_React$Component) {
 			if (this.props.onChange) {
 				this.props.onChange(Math.round(100 / width * coords.x1), Math.round(100 / height * coords.y1), Math.round(100 / width * coords.x2), Math.round(100 / height * coords.y2));
 			}
+		}
+	}, {
+		key: 'resetPosition',
+		value: function resetPosition(x1, y1, x2, y2, maxX, maxY) {
+			this.handle = 'N';
+			var coords = this.adjustPosition(x1, y1, x2, y2);
+			this.handle = '';
+
+			var width = coords.x2 - coords.x1;
+			var height = coords.y2 - coords.y1;
+
+			coords.x1 = Math.round((maxX - width) / 2);
+			coords.x2 = coords.x1 + width;
+			coords.y1 = Math.round((maxY - height) / 2);
+			coords.y2 = coords.y1 + height;
+
+			this.setState(coords);
 		}
 	}, {
 		key: 'adjustPosition',
