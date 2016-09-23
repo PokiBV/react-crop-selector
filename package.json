@@ -1,6 +1,6 @@
 {
   "name": "react-crop-selector",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Select crop boundaries in an image",
   "author": "chielkunkels",
   "repository": "pokibv/react-crop-selector",
