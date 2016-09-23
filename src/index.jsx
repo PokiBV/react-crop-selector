@@ -36,6 +36,13 @@ export default class CropSelector extends React.Component {
 			y2: Math.round((height / 100) * y2),
 		};
 
+		this.lock = {
+			x1: false,
+			y1: false,
+			x2: false,
+			y2: false,
+		};
+
 		this.onDragStart = this.onDragStart.bind(this);
 		this.onDragMove = this.onDragMove.bind(this);
 		this.onDragEnd = this.onDragEnd.bind(this);
