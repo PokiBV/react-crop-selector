@@ -269,7 +269,12 @@ export default class CropSelector extends React.Component {
 			}
 		}
 
-		return { x1, y1, x2, y2 };
+		return {
+			x1: Math.round(x1),
+			y1: Math.round(y1),
+			x2: Math.round(x2),
+			y2: Math.round(y2),
+		};
 	}
 
 	render() {
