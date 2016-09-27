@@ -89,6 +89,8 @@ export default class CropSelector extends React.Component {
 	}
 
 	componentWillReceiveProps({ x1, y1, x2, y2, width, height, minWidth, minHeight, ratio }) {
+		this.handle = 'N';
+
 		this.setPosition(
 			Math.round((width / 100) * x1),
 			Math.round((height / 100) * y1),
@@ -100,6 +102,8 @@ export default class CropSelector extends React.Component {
 			minHeight,
 			ratio
 		);
+
+		this.handle = '';
 	}
 
 	onDragStart(ev) {
