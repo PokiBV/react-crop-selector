@@ -50,10 +50,15 @@ export default class CropSelector extends React.Component {
 
 	componentWillMount() {
 		const { x1, y1, x2, y2 } = this.state;
-		const { width: maxWidth, height: maxHeight } = this.props;
+		const { width: maxWidth, height: maxHeight, minWidth, minHeight, ratio } = this.props;
 
 		this.handle = 'N';
-		const coords = this.adjustPosition(x1, y1, x2, y2);
+		const coords = this.adjustPosition(
+			x1, y1, x2, y2,
+			maxWidth, maxHeight,
+			minWidth, minHeight,
+			ratio
+		);
 		this.handle = '';
 
 		if (
@@ -74,12 +79,17 @@ export default class CropSelector extends React.Component {
 		this.setState(coords);
 	}
 
-	componentWillReceiveProps({ width, height, x1, y1, x2, y2 }) {
+	componentWillReceiveProps({ x1, y1, x2, y2, width, height, minWidth, minHeight, ratio }) {
 		this.setPosition(
 			Math.round((width / 100) * x1),
 			Math.round((height / 100) * y1),
 			Math.round((width / 100) * x2),
 			Math.round((height / 100) * y2),
+			width,
+			height,
+			minWidth,
+			minHeight,
+			ratio
 		);
 	}
 
@@ -115,6 +125,11 @@ export default class CropSelector extends React.Component {
 			this.lock.y1 ? y1 : y1 + dY,
 			this.lock.x2 ? x2 : x2 + dX,
 			this.lock.y2 ? y2 : y2 + dY,
+			this.props.width,
+			this.props.height,
+			this.props.minWidth,
+			this.props.minHeight,
+			this.props.ratio,
 		);
 	}
 
@@ -126,9 +141,8 @@ export default class CropSelector extends React.Component {
 		window.removeEventListener('mouseup', this.onDragEnd);
 	}
 
-	setPosition(x1, y1, x2, y2) {
-		const { width, height } = this.props;
-		const coords = this.adjustPosition(x1, y1, x2, y2);
+	setPosition(x1, y1, x2, y2, width, height, minWidth, minHeight, ratio) {
+		const coords = this.adjustPosition(x1, y1, x2, y2, width, height, minWidth, minHeight, ratio);
 
 		if (
 			this.state.x1 === coords.x1 && this.state.y1 === coords.y1 &&
@@ -149,10 +163,9 @@ export default class CropSelector extends React.Component {
 		}
 	}
 
-	adjustPosition(x1, y1, x2, y2) {
-		const { width: maxWidth, height: maxHeight } = this.props;
-		const minWidth = (maxWidth / 100) * this.props.minWidth;
-		const minHeight = (maxHeight / 100) * this.props.minHeight;
+	adjustPosition(x1, y1, x2, y2, maxWidth, maxHeight, absMinWidth, absMinHeight, ratioString) {
+		const minWidth = (maxWidth / 100) * absMinWidth;
+		const minHeight = (maxHeight / 100) * absMinHeight;
 		let width = x2 - x1;
 		let height = y2 - y1;
 
@@ -199,8 +212,8 @@ export default class CropSelector extends React.Component {
 			}
 		}
 
-		if (this.props.ratio && this.handle) {
-			const ratio = this.props.ratio.split(':').map(i => parseInt(i, 10));
+		if (ratioString && this.handle) {
+			const ratio = ratioString.split(':').map(i => parseInt(i, 10));
 
 			if (/(?:N|S)/.test(this.handle)) {
 				width = Math.round((height / ratio[1]) * ratio[0]);
