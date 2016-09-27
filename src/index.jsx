@@ -50,7 +50,7 @@ export default class CropSelector extends React.Component {
 
 	componentWillMount() {
 		const { x1, y1, x2, y2 } = this.state;
-		const { width: maxX, height: maxY } = this.props;
+		const { width: maxWidth, height: maxHeight } = this.props;
 
 		this.handle = 'N';
 		const coords = this.adjustPosition(x1, y1, x2, y2);
@@ -66,9 +66,9 @@ export default class CropSelector extends React.Component {
 		const width = coords.x2 - coords.x1;
 		const height = coords.y2 - coords.y1;
 
-		coords.x1 = Math.round((maxX - width) / 2);
+		coords.x1 = Math.round((maxWidth - width) / 2);
 		coords.x2 = coords.x1 + width;
-		coords.y1 = Math.round((maxY - height) / 2);
+		coords.y1 = Math.round((maxHeight - height) / 2);
 		coords.y2 = coords.y1 + height;
 
 		this.setState(coords);
@@ -150,9 +150,9 @@ export default class CropSelector extends React.Component {
 	}
 
 	adjustPosition(x1, y1, x2, y2) {
-		const { width: maxX, height: maxY } = this.props;
-		const minWidth = (maxX / 100) * this.props.minWidth;
-		const minHeight = (maxY / 100) * this.props.minHeight;
+		const { width: maxWidth, height: maxHeight } = this.props;
+		const minWidth = (maxWidth / 100) * this.props.minWidth;
+		const minHeight = (maxHeight / 100) * this.props.minHeight;
 		let width = x2 - x1;
 		let height = y2 - y1;
 
@@ -161,8 +161,8 @@ export default class CropSelector extends React.Component {
 			x2 = this.lock.x2 ? x2 : x1 + width;
 		}
 
-		if (x2 > maxX) {
-			x2 = maxX;
+		if (x2 > maxWidth) {
+			x2 = maxWidth;
 			x1 = this.lock.x1 ? x1 : x2 - width;
 		}
 
@@ -171,8 +171,8 @@ export default class CropSelector extends React.Component {
 			y2 = this.lock.y2 ? y2 : y1 + height;
 		}
 
-		if (y2 > maxY) {
-			y2 = maxY;
+		if (y2 > maxHeight) {
+			y2 = maxHeight;
 			y1 = this.lock.y1 ? y1 : y2 - height;
 		}
 
@@ -222,13 +222,13 @@ export default class CropSelector extends React.Component {
 					x2 = x1 + width;
 				}
 
-				if (x1 < 0 || x2 > maxX) {
+				if (x1 < 0 || x2 > maxWidth) {
 					if (x1 < 0) {
 						x1 = 0;
 					}
 
-					if (x2 > maxX) {
-						x2 = maxX;
+					if (x2 > maxWidth) {
+						x2 = maxWidth;
 					}
 
 					width = x2 - x1;
@@ -262,13 +262,13 @@ export default class CropSelector extends React.Component {
 					y2 = y1 + height;
 				}
 
-				if (y1 < 0 || y2 > maxY) {
+				if (y1 < 0 || y2 > maxHeight) {
 					if (y1 < 0) {
 						y1 = 0;
 					}
 
-					if (y2 > maxY) {
-						y2 = maxY;
+					if (y2 > maxHeight) {
+						y2 = maxHeight;
 					}
 
 					height = y2 - y1;
