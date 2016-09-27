@@ -130,6 +130,13 @@ export default class CropSelector extends React.Component {
 		const { width, height } = this.props;
 		const coords = this.adjustPosition(x1, y1, x2, y2);
 
+		if (
+			this.state.x1 === coords.x1 && this.state.y1 === coords.y1 &&
+			this.state.x2 === coords.x2 && this.state.y2 === coords.y2
+		) {
+			return;
+		}
+
 		this.setState(coords);
 
 		if (this.props.onChange) {
