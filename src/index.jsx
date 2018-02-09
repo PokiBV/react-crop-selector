@@ -1,19 +1,21 @@
 import React from 'react';
+import PT from 'prop-types';
+
 import styles from './crop-selector.css';
 
 export default class CropSelector extends React.Component {
 	static propTypes = {
-		width: React.PropTypes.number.isRequired,
-		height: React.PropTypes.number.isRequired,
-		onChange: React.PropTypes.func,
-		x1: React.PropTypes.number,
-		y1: React.PropTypes.number,
-		x2: React.PropTypes.number,
-		y2: React.PropTypes.number,
-		minWidth: React.PropTypes.number,
-		minHeight: React.PropTypes.number,
-		ratio: React.PropTypes.string,
-		guide: React.PropTypes.oneOf(['rule-of-thirds']),
+		width: PT.number.isRequired,
+		height: PT.number.isRequired,
+		onChange: PT.func,
+		x1: PT.number,
+		y1: PT.number,
+		x2: PT.number,
+		y2: PT.number,
+		minWidth: PT.number,
+		minHeight: PT.number,
+		ratio: PT.string,
+		guide: PT.oneOf(['rule-of-thirds']),
 	};
 
 	static defaultProps = {
