@@ -1,10 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies,react/jsx-filename-extension */
 import test from 'ava';
-import { shallow } from 'enzyme';
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { spy } from 'sinon';
 import CropSelector from '..';
 import styles from '../lib/crop-selector.css';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 test('<CropSelector /> should set given width and height on container', t => {
 	const container = shallow(<CropSelector width={640} height={480} />);
